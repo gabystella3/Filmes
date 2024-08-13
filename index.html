@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>leg</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .carousel img {
+      height: 300px;
+      object-fit: contain; /* Mantém as proporções da imagem */
+      width: 100%;
+    }
+
+    .carousel {
+      position: relative;
+      overflow: hidden; /* Oculta imagens fora da área visível */
+    }
+
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-inner>img {
+      flex: 0 0 100%; /* Ajustado para mostrar uma imagem por vez */
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .carousel-controls button {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .carousel-controls button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .carousel-indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .carousel-indicators button {
+      width: 10px;
+      height: 10px;
+      background-color: #ccc;
+      border-radius: 50%;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .carousel-indicators button.active {
+      background-color: #666;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-to-r from-gray-200 to-gray-400">
+  <div class="max-w-5xl mx-auto p-8 flex items-center">
+    <!-- Text and Button -->
+    <div class="w-1/2">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">Minha Lista de Filmes e Séries Preferidos</h2>
+      <p class="text-gray-600 mb-8"></p>
+      <button class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors">:)</button>
+    </div>
+    <!-- Carousel -->
+    <div class="w-1/2 carousel" id="carousel1">
+      <div class="relative">
+        <div class="carousel-inner flex">
+          <img src="/IMG_6018.jpeg" alt="Slide 1">
+          <img src="/IMG_6022.jpeg" alt="Slide 2">
+          <img src="/IMG_6019.jpeg" alt="Slide 3">
+          <img src="/IMG_6025.jpeg" alt="Slide 4">
+          <img src="/IMG_6023.jpeg" alt="Slide 5">
+        </div>
+        <div class="carousel-controls">
+          <button class="prevBtn" aria-label="Previous">&lt;</button>
+          <button class="nextBtn" aria-label="Next">&gt;</button>
+        </div>
+        <div class="carousel-indicators">
+          <button class="active" data-slide="0"></button>
+          <button data-slide="1"></button>
+          <button data-slide="2"></button>
+          <button data-slide="3"></button>
+          <button data-slide="4"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-3xl font-bold text-gray-800 text-center mt-8">Livros</h2>
+
+  <div class="max-w-5xl mx-auto p-8 flex items-center mt-8">
+    <!-- Carousel -->
+    <div class="w-full carousel" id="carousel2">
+      <div class="relative">
+        <div class="carousel-inner flex">
+          <img src="/IMG_6027.jpeg" alt="Slide 1">
+          <img src="/IMG_6028.jpeg" alt="Slide 2">
+          <img src="/IMG_6029.jpeg" alt="Slide 3">
+          <img src="/IMG_6030.jpeg" alt="Slide 4">
+          <img src="/IMG_6031.jpeg" alt="Slide 5">
+        </div>
+        <div class="carousel-controls">
+          <button class="prevBtn" aria-label="Previous">&lt;</button>
+          <button class="nextBtn" aria-label="Next">&gt;</button>
+        </div>
+        <div class="carousel-indicators">
+          <button class="active" data-slide="0"></button>
+          <button data-slide="1"></button>
+          <button data-slide="2"></button>
+          <button data-slide="3"></button>
+          <button data-slide="4"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.carousel').forEach((carousel) => {
+      const carouselInner = carousel.querySelector('.carousel-inner');
+      const prevBtn = carousel.querySelector('.prevBtn');
+      const nextBtn = carousel.querySelector('.nextBtn');
+      const indicatorBtns = carousel.querySelectorAll('.carousel-indicators button');
+
+      const totalSlides = carouselInner.children.length;
+      const slideWidth = 100; // 100% largura para uma imagem por vez
+
+      let currentIndex = 0;
+
+      function updateIndicators() {
+        indicatorBtns.forEach((btn, i) => {
+          btn.classList.toggle('active', i === currentIndex);
+        });
+      }
+
+      function showSlide(index) {
+        currentIndex = (index + totalSlides) % totalSlides; // Mantém o índice dentro do intervalo válido
+        const offset = currentIndex * slideWidth; // Ajusta o deslocamento com base na posição do slide atual
+        carouselInner.style.transform = `translateX(-${offset}%)`;
+        updateIndicators();
+      }
+
+      nextBtn.addEventListener('click', () => {
+        showSlide(currentIndex + 1);
+      });
+
+      prevBtn.addEventListener('click', () => {
+        showSlide(currentIndex - 1);
+      });
+
+      indicatorBtns.forEach((btn, index) => {
+        btn.addEventListener('click', () => {
+          showSlide(index);
+        });
+      });
+
+      showSlide(0); // Inicia com o primeiro slide
+    });
+  </script>
+</body>
+
+</html>
